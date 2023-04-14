@@ -1,0 +1,12 @@
+Complexity Setting
+
+Boolean (Solution Cardinality = 2):
+A: red + blue + circle + triangle
+
+Sum (Solution Cardinality = 2)
+A: 1|blue + 1|circle
+B: 1|red + 1|triangle
+
+Product (Solution Cardinality = 2)
+A: 1|circle + 1|red * 1|triangle
+B: 1|red + 1|blue * 1|circle

@@ -1,0 +1,14 @@
+Complexity Setting
+
+Boolean (Solution Cardinality = 32):
+A: red + blue + circle + triangle + dotted + slashed
+
+Sum (Solution Cardinality = 24)
+A: 2|blue + 1|red
+B: 2|dotted + 1|slashed
+C: 2|triangle + 1|circle
+
+Product (Solution Cardinality = 24)
+A: 1|red + 1|red * 1|circle
+B: 1|triangle + 1|dotted * 1|triangle
+C: 1|slashed + 1|blue * 1|slashed
