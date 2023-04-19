@@ -456,7 +456,7 @@ class Simple_Bayesian():
 
 	def posterior(self, likelihood_prob):
 		marginalizer = likelihood_prob.dot(self.priors)
-		return np.multiply(likelihood_prob, self.priors)
+		return np.multiply(likelihood_prob, self.priors)/marginalizer
 
 	def update(self, sequence, prediction):
 		self.priors = self.posterior(self.likelihood(sequence, prediction))

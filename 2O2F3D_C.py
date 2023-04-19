@@ -13,8 +13,9 @@ LOG_FLAG = True
 
 def main():
 	# Sigma Settings
-	Shape = ["Circle", "Square", "Triangle"]
-	Fill = ["Blue", "Green", "Red"]
+	METAL = ["Turpeth", "Solaris", "Infernalis"]
+	SALT = ["Alembroth", "Volatile", "Petrae"]
+	ACID = "Hartshorn"
 	R = 2
 	GENERATION_MODE = "Combination"
 
@@ -30,16 +31,17 @@ def main():
 	INCORRECT = 56
 
 	# Output Settings
-	DIRECTORY = "./rsps/2O2F3D_H/"
+	DIRECTORY = "./rsps/2O2F3D_C/"
 	HEADER = ["Blc", "Seq", "Rsp", "Truth", "Rsp_t1", "Rsp_t2", "Cnfdnc"]
 
 	###########################################################################
 
 	# Init Sigma
-	SIG = stimuli.Sigma([Shape, Fill], ["shape", "fill"], R, generation_mode = GENERATION_MODE)
+	SIG = stimuli.Sigma([METAL, SALT], ["metal", "salt"], R, generation_mode = GENERATION_MODE)
 	for obj in SIG.objects: print(obj)
 	# print(len(SIG.objects))
 	# print(len(SIG.sequences))
+	# exit()
 
 	# ###
 	# conj_hypotheses = []
@@ -100,17 +102,18 @@ def main():
 	# WIN = visual.Window([2560, 1440], monitor="testMonitor", units="deg", fullscr = False, useRetina = True, screen = 0)
 	STIMSIZE = None
 	OBJ_DICT = {
-		2: visual.ImageStim(WIN, "rsc/2O2F3D_C/BC.png"),
-		3: visual.ImageStim(WIN, "rsc/2O2F3D_C/GC.png"),
-		5: visual.ImageStim(WIN, "rsc/2O2F3D_C/RC.png"),
-		7: visual.ImageStim(WIN, "rsc/2O2F3D_C/BS.png"),
-		11: visual.ImageStim(WIN, "rsc/2O2F3D_C/GS.png"),
-		13: visual.ImageStim(WIN, "rsc/2O2F3D_C/RS.png"),
-		17: visual.ImageStim(WIN, "rsc/2O2F3D_C/BT.png"),
-		19: visual.ImageStim(WIN, "rsc/2O2F3D_C/GT.png"),
-		23: visual.ImageStim(WIN, "rsc/2O2F3D_C/RT.png")
+		0: [visual.ImageStim(WIN, "rsc/2O2F3D_C/Hartshorn.png", size = STIMSIZE), visual.ImageStim(WIN, "rsc/2O2F3D_C/Hartshorn.png", size = STIMSIZE)],
+		2: visual.ImageStim(WIN, "rsc/2O2F3D_C/TA.png"),
+		3: visual.ImageStim(WIN, "rsc/2O2F3D_C/TV.png"),
+		5: visual.ImageStim(WIN, "rsc/2O2F3D_C/TP.png"),
+		7: visual.ImageStim(WIN, "rsc/2O2F3D_C/SA.png"),
+		11: visual.ImageStim(WIN, "rsc/2O2F3D_C/SV.png"),
+		13: visual.ImageStim(WIN, "rsc/2O2F3D_C/SP.png"),
+		17: visual.ImageStim(WIN, "rsc/2O2F3D_C/IA.png"),
+		19: visual.ImageStim(WIN, "rsc/2O2F3D_C/IV.png"),
+		23: visual.ImageStim(WIN, "rsc/2O2F3D_C/IP.png")
 	}
-	OBJ_LINSPACE = [-4, 0, 4]
+	OBJ_LINSPACE = [-8.3, 0, 8.3]
 	TRIAL_OBJ_DICT = {
 		"prompt_msg": visual.TextBox2(WIN, 'Your Prediction: ', pos = [-10, -5], alignment = 'right', letterHeight = 1),
 		"true_usr": visual.TextBox2(WIN, 'True', pos = [15, -5], alignment = 'left', color = "Green", letterHeight = 1),
