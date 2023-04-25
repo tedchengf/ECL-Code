@@ -9,12 +9,13 @@ import os
 import stimuli
 
 OBJ_SIZE = [8,6]
-LOG_FLAG = True
+LOG_FLAG = False
 
 def main():
 	# Sigma Settings
-	Shape = ["Circle", "Square", "Triangle"]
-	Fill = ["Blue", "Green", "Red"]
+	METAL = ["Turpeth", "Solaris", "Infernalis"]
+	SALT = ["Alembroth", "Volatile", "Petrae"]
+	ACID = "Hartshorn"
 	R = 2
 	GENERATION_MODE = "Combination"
 
@@ -30,38 +31,13 @@ def main():
 	INCORRECT = 56
 
 	# Output Settings
-	DIRECTORY = "./rsps/2O2F3D_H/"
+	DIRECTORY = "./rsps/2O2F3D_C/"
 	HEADER = ["Blc", "Seq", "Rsp", "Truth", "Rsp_t1", "Rsp_t2", "Cnfdnc"]
 
 	###########################################################################
 
 	# Init Sigma
-	SIG = stimuli.Sigma([Shape, Fill], ["shape", "fill"], R, generation_mode = GENERATION_MODE)
-	for obj in SIG.objects: print(obj)
-	# print(len(SIG.objects))
-	# print(len(SIG.sequences))
-
-	# ###
-	# conj_hypotheses = []
-	# for conj in SIG.generate_conjuncts(conjunct_type = "Sum", subset_type = ">="):
-	# 	sol_card = len(SIG.satisfies(conj))
-	# 	if sol_card > 0: conj_hypotheses.append(conj)
-
-	# # True_formula = SIG.form_conjunct(Prod_Conj["A"], conjunct_type = "Product", subset_type = ">=")
-	# True_formula = SIG.form_conjunct(Bool_Conj, conjunct_type = "Sum", subset_type = ">=")
-	# # True_formula = SIG.form_conjunct(Sum_Conj["A"], conjunct_type = "Sum", subset_type = "==")
-	# model = stimuli.Simple_Bayesian(conj_hypotheses)
-	# correct_seq, incorrect_seq = seq_handler(SIG, SIG.sequences, True_formula, CORRECT, INCORRECT)
-	# block_seq = correct_seq + incorrect_seq
-	# random.shuffle(block_seq)
-	# for seq in block_seq: 
-	# 	model.update(seq, seq.satisfies(True_formula))
-	# best_conjs, best_probs = model.find_max(n = 4)
-	# for ind in range(len(best_conjs)):
-	# 	print(best_probs[ind])
-	# 	print(best_conjs[ind].hierarchical_rep())
-	# exit()
-	# ###
+	SIG = stimuli.Sigma([METAL, SALT], ["metal", "salt"], R, generation_mode = GENERATION_MODE)
 
 	# Get input settings
 	sub_code = input("Enter Subject code: ")
@@ -95,29 +71,30 @@ def main():
 	###########################################################################
 	
 	# Presentation Settings
-	WIN = visual.Window([1728, 1117], monitor="testMonitor", units="deg", fullscr = True, useRetina = True)
+	# WIN = visual.Window([1728, 1117], monitor="testMonitor", units="deg", fullscr = True, useRetina = True)
 	# WIN = visual.Window([1728, 1117], monitor="testMonitor", units="deg", fullscr = False, useRetina = True, screen = 1)
-	# WIN = visual.Window([2560, 1440], monitor="testMonitor", units="deg", fullscr = False, useRetina = True, screen = 0)
+	WIN = visual.Window([2560, 1440], monitor="testMonitor", units="deg", fullscr = False, useRetina = True, screen = 1)
 	STIMSIZE = None
 	OBJ_DICT = {
-		2: visual.ImageStim(WIN, "rsc/2O2F3D_H/BC.png"),
-		3: visual.ImageStim(WIN, "rsc/2O2F3D_H/GC.png"),
-		5: visual.ImageStim(WIN, "rsc/2O2F3D_H/RC.png"),
-		7: visual.ImageStim(WIN, "rsc/2O2F3D_H/BS.png"),
-		11: visual.ImageStim(WIN, "rsc/2O2F3D_H/GS.png"),
-		13: visual.ImageStim(WIN, "rsc/2O2F3D_H/RS.png"),
-		17: visual.ImageStim(WIN, "rsc/2O2F3D_H/BT.png"),
-		19: visual.ImageStim(WIN, "rsc/2O2F3D_H/GT.png"),
-		23: visual.ImageStim(WIN, "rsc/2O2F3D_H/RT.png")
+		0: [visual.ImageStim(WIN, "rsc/2O2F3D_C/Hartshorn.png", size = STIMSIZE), visual.ImageStim(WIN, "rsc/2O2F3D_C/Hartshorn.png", size = STIMSIZE)],
+		2: visual.ImageStim(WIN, "rsc/2O2F3D_C/TA.png"),
+		3: visual.ImageStim(WIN, "rsc/2O2F3D_C/TV.png"),
+		5: visual.ImageStim(WIN, "rsc/2O2F3D_C/TP.png"),
+		7: visual.ImageStim(WIN, "rsc/2O2F3D_C/SA.png"),
+		11: visual.ImageStim(WIN, "rsc/2O2F3D_C/SV.png"),
+		13: visual.ImageStim(WIN, "rsc/2O2F3D_C/SP.png"),
+		17: visual.ImageStim(WIN, "rsc/2O2F3D_C/IA.png"),
+		19: visual.ImageStim(WIN, "rsc/2O2F3D_C/IV.png"),
+		23: visual.ImageStim(WIN, "rsc/2O2F3D_C/IP.png")
 	}
-	OBJ_LINSPACE = [-4, 0, 4]
+	OBJ_LINSPACE = [-8.3, 0, 8.3]
 	TRIAL_OBJ_DICT = {
-		"prompt_msg": visual.TextBox2(WIN, 'Your Prediction: ', pos = [-10, -5], alignment = 'right', letterHeight = 1),
-		"true_usr": visual.TextBox2(WIN, 'True', pos = [15, -5], alignment = 'left', color = "Green", letterHeight = 1),
-		"fals_usr": visual.TextBox2(WIN, 'False', pos = [15, -5], alignment = 'left', color = "Red", letterHeight = 1),
-		"response_msg": visual.TextBox2(WIN, 'Correct Response: ', pos = [-10, -7], alignment = 'right', letterHeight = 1),
-		"true_rsp": visual.TextBox2(WIN, 'True', pos = [15, -7], alignment = 'left', color = "Green", letterHeight = 1),
-		"fals_rsp": visual.TextBox2(WIN, 'False', pos = [15, -7], alignment = 'left', color = "Red", letterHeight = 1),
+		"prompt_msg": visual.TextBox2(WIN, 'Your Prediction: ', pos = [-17, -5], alignment = 'right', letterHeight = 1),
+		"true_usr": visual.TextBox2(WIN, 'True', pos = [21, -5], alignment = 'left', color = "Green", letterHeight = 1),
+		"fals_usr": visual.TextBox2(WIN, 'False', pos = [21, -5], alignment = 'left', color = "Red", letterHeight = 1),
+		"response_msg": visual.TextBox2(WIN, 'Correct Response: ', pos = [-17, -7], alignment = 'right', letterHeight = 1),
+		"true_rsp": visual.TextBox2(WIN, 'True', pos = [21, -7], alignment = 'left', color = "Green", letterHeight = 1),
+		"fals_rsp": visual.TextBox2(WIN, 'False', pos = [21, -7], alignment = 'left', color = "Red", letterHeight = 1),
 		"Correct_sound": sound.Sound("rsc/Correct.wav"),
 		"Incorrect_sound": sound.Sound("rsc/Incorrect.wav"),
 		"Correct_text": visual.TextBox2(WIN, "Congrats! You prediction is correct!", pos = [0, -10], alignment = 'center', color = "Green", letterHeight = 0.8),
@@ -131,7 +108,7 @@ def main():
 	###########################################################################
 
 	# define a manual
-	ctrl = visual.TextBox2(WIN, "T: True            F: False            1-5: Confidence Rating            Space/Enter: Proceed", size = [30,3], alignment = "center", pos = (0,-15), letterHeight = 0.7, fillColor = "black", opacity = 0.5, borderWidth = 0)
+	ctrl = visual.TextBox2(WIN, "T: True            F: False            1-5: Confidence Rating            Space/Enter: Proceed", size = [30,3], alignment = "center", pos = (0,-18.3), letterHeight = 0.7, fillColor = "black", opacity = 0.5, borderWidth = 0)
 	disp_objs = [ctrl]
 	
 	# Prepare Stimuli
@@ -317,7 +294,7 @@ def test_block(win, obj_dict, trial_obj_dict, sequences, formula, obj_linspace, 
 	total_rsp = np.empty((len(sequences), 6), dtype = object)
 	for ind, seq in enumerate(sequences):
 		curr_disp_objs = disp_objs.copy()
-		trial_counter = visual.TextBox2(win, "Trial " + str(ind + 1) + " out of " + str(len(sequences)) + ".", pos = [0,13], alignment = 'center', letterHeight = 0.7)
+		trial_counter = visual.TextBox2(win, "Trial " + str(ind + 1) + " out of " + str(len(sequences)) + ".", pos = [0,18], alignment = 'center', letterHeight = 0.7)
 		curr_disp_objs.append(trial_counter)
 		total_rsp[ind] = trial(win, obj_dict, trial_obj_dict, seq, formula, obj_linspace, curr_disp_objs)
 		core.wait(0.4)
@@ -351,7 +328,7 @@ def block(win, block_num, obj_dict, trial_obj_dict, sequences, formula, obj_lins
 	total_rsp[:, 0] = block_num
 	for ind, seq in enumerate(sequences):
 		curr_disp_objs = disp_objs.copy()
-		trial_counter = visual.TextBox2(win, "Trial " + str(ind + 1) + " out of " + str(len(sequences)) + ".", pos = [0,13], alignment = 'center', letterHeight = 0.7)
+		trial_counter = visual.TextBox2(win, "Trial " + str(ind + 1) + " out of " + str(len(sequences)) + ".", pos = [0,18], alignment = 'center', letterHeight = 0.7)
 		curr_disp_objs.append(trial_counter)
 		total_rsp[ind, 1:] = trial(win, obj_dict, trial_obj_dict, seq, formula, obj_linspace, curr_disp_objs, show_truth = show_truth)
 		core.wait(0.4)
@@ -417,53 +394,16 @@ def trial(win, obj_dict, trial_obj_dict, Sequence, formula, obj_linspace, disp_o
 	Incorrect_text = trial_obj_dict["Incorrect_text"]
 	ratingScale = visual.RatingScale(win, low = 1, high = 5, labels = ["(1) I was just guessing", "(5) Very Confident"], scale = "How confident are you in your prediction?", markerColor = "orange", pos = (0,0), size = 1.2, stretch = 1.4, textSize = 0.8, acceptPreText = "Your rating: ", acceptKeys = ['return', 'space'])
 	ground_truth = Sequence.satisfies(formula)
-
-	# Actual trial
-	while True:
-		# Drawing
-		for obj in win_objs: obj.draw()
-		for obj in disp_objs: obj.draw()
-		prompt_msg.draw()
-		win.flip(clearBuffer = False)
-
-		start_time = time.time()
-		# Prompt user response
-		curr_rsp = None
-		while curr_rsp is None:
-			allKeys = event.waitKeys()
-			for thisKey in allKeys:
-				if thisKey == "q": exit("Experiment Aborted")
-				if thisKey == "t":
-					true_usr.draw()
-					curr_rsp = True
-					end_time = time.time()
-					break
-				if thisKey == "f":
-					fals_usr.draw()
-					curr_rsp = False
-					end_time = time.time()
-					break
-		for obj in win_objs: obj.draw()
-		for obj in disp_objs: obj.draw()
-		prompt_msg.draw()
-		win.flip(clearBuffer = False)
-		rspt_1 = end_time - start_time
-		trial_rsp = curr_rsp
-		break
-
-	while True:
-		allKeys = event.waitKeys()
-		break_flag = False
-		for thisKey in allKeys:
-			if thisKey == "q": exit("Experiment Aborted")
-			if thisKey == 'space' or thisKey == 'return':
-				break_flag = True
-				break
-		if break_flag == True: break
 	
-	# Confidence Ratings
-	core.wait(0.1)
+	start_time = time.time()
+	trial_rsp = decision_process(win, win_objs, disp_objs, prompt_msg, true_usr, fals_usr)
+	end_time = time.time()
+	rspt_1 = end_time - start_time
 	win.flip()
+	win.flip()
+
+	# Confidence Ratings
+	core.wait(0.5)
 	while ratingScale.noResponse:
 		ratingScale.draw()
 		for obj in disp_objs: obj.draw()
@@ -514,6 +454,42 @@ def trial(win, obj_dict, trial_obj_dict, Sequence, formula, obj_linspace, disp_o
 	event.clearEvents()
 
 	return [seq_rep, trial_rsp, ground_truth, rspt_1, rspt_2, rating]
+
+def decision_process(win, win_objs, disp_objs, prompt_msg, true_usr, fals_usr):
+	prev_rsp = None
+	# Actual trial
+	while True:
+		# Drawing
+		win.flip()
+		for obj in win_objs: obj.draw()
+		for obj in disp_objs: obj.draw()
+		prompt_msg.draw()
+		if prev_rsp is not None: prev_rsp.draw()
+		win.flip(clearBuffer = False)
+
+		# Prompt user response
+		curr_rsp = None
+		while curr_rsp is None:
+			allKeys = event.waitKeys()
+			for thisKey in allKeys:
+				if thisKey == "q": exit("Experiment Aborted")
+				if thisKey == "t":
+					true_usr.draw()
+					prev_rsp = true_usr
+					curr_rsp = True
+					break
+				if thisKey == "f":
+					fals_usr.draw()
+					prev_rsp = fals_usr
+					curr_rsp = False
+					break
+				if thisKey == 'space' or thisKey == 'return':
+					if prev_rsp is not None:
+						if prev_rsp == true_usr: return True
+						else: return False
+		prompt_msg.draw()
+		win.flip(clearBuffer = False)
+
 
 if __name__ == "__main__":
 	main()

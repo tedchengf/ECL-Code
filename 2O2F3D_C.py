@@ -9,7 +9,7 @@ import os
 import stimuli
 
 OBJ_SIZE = [8,6]
-LOG_FLAG = True
+LOG_FLAG = False
 
 def main():
 	# Sigma Settings
@@ -421,49 +421,55 @@ def trial(win, obj_dict, trial_obj_dict, Sequence, formula, obj_linspace, disp_o
 	ratingScale = visual.RatingScale(win, low = 1, high = 5, labels = ["(1) I was just guessing", "(5) Very Confident"], scale = "How confident are you in your prediction?", markerColor = "orange", pos = (0,0), size = 1.2, stretch = 1.4, textSize = 0.8, acceptPreText = "Your rating: ", acceptKeys = ['return', 'space'])
 	ground_truth = Sequence.satisfies(formula)
 
-	# Actual trial
-	while True:
-		# Drawing
-		for obj in win_objs: obj.draw()
-		for obj in disp_objs: obj.draw()
-		prompt_msg.draw()
-		win.flip(clearBuffer = False)
+	# # Actual trial
+	# while True:
+	# 	# Drawing
+	# 	for obj in win_objs: obj.draw()
+	# 	for obj in disp_objs: obj.draw()
+	# 	prompt_msg.draw()
+	# 	win.flip(clearBuffer = False)
 
-		start_time = time.time()
-		# Prompt user response
-		curr_rsp = None
-		while curr_rsp is None:
-			allKeys = event.waitKeys()
-			for thisKey in allKeys:
-				if thisKey == "q": exit("Experiment Aborted")
-				if thisKey == "t":
-					true_usr.draw()
-					curr_rsp = True
-					end_time = time.time()
-					break
-				if thisKey == "f":
-					fals_usr.draw()
-					curr_rsp = False
-					end_time = time.time()
-					break
-		for obj in win_objs: obj.draw()
-		for obj in disp_objs: obj.draw()
-		prompt_msg.draw()
-		win.flip(clearBuffer = False)
-		rspt_1 = end_time - start_time
-		trial_rsp = curr_rsp
-		break
+	# 	start_time = time.time()
+	# 	# Prompt user response
+	# 	curr_rsp = None
+	# 	while curr_rsp is None:
+	# 		allKeys = event.waitKeys()
+	# 		for thisKey in allKeys:
+	# 			if thisKey == "q": exit("Experiment Aborted")
+	# 			if thisKey == "t":
+	# 				true_usr.draw()
+	# 				curr_rsp = True
+	# 				end_time = time.time()
+	# 				break
+	# 			if thisKey == "f":
+	# 				fals_usr.draw()
+	# 				curr_rsp = False
+	# 				end_time = time.time()
+	# 				break
+	# 	for obj in win_objs: obj.draw()
+	# 	for obj in disp_objs: obj.draw()
+	# 	prompt_msg.draw()
+	# 	win.flip(clearBuffer = False)
+	# 	rspt_1 = end_time - start_time
+	# 	trial_rsp = curr_rsp
+	# 	break
 
-	while True:
-		allKeys = event.waitKeys()
-		break_flag = False
-		for thisKey in allKeys:
-			if thisKey == "q": exit("Experiment Aborted")
-			if thisKey == 'space' or thisKey == 'return':
-				break_flag = True
-				break
-		if break_flag == True: break
+	# while True:
+	# 	allKeys = event.waitKeys()
+	# 	break_flag = False
+	# 	for thisKey in allKeys:
+	# 		if thisKey == "q": exit("Experiment Aborted")
+	# 		if thisKey == 'space' or thisKey == 'return':
+	# 			break_flag = True
+	# 			break
+	# 	if break_flag == True: break
 	
+	start_time = time.time()
+	trial_rsp = decision_process(win, win_objs, disp_objs, prompt_msg, true_usr, fals_usr)
+	end_time = time.time()
+	rspt_1 = end_time - start_time
+
+
 	# Confidence Ratings
 	core.wait(0.1)
 	win.flip()
@@ -517,6 +523,42 @@ def trial(win, obj_dict, trial_obj_dict, Sequence, formula, obj_linspace, disp_o
 	event.clearEvents()
 
 	return [seq_rep, trial_rsp, ground_truth, rspt_1, rspt_2, rating]
+
+def decision_process(win, win_objs, disp_objs, prompt_msg, true_usr, fals_usr):
+	prev_rsp = None
+	# Actual trial
+	while True:
+		# Drawing
+		win.flip()
+		for obj in win_objs: obj.draw()
+		for obj in disp_objs: obj.draw()
+		prompt_msg.draw()
+		if prev_rsp is not None: prev_rsp.draw()
+		win.flip(clearBuffer = False)
+
+		# Prompt user response
+		curr_rsp = None
+		while curr_rsp is None:
+			allKeys = event.waitKeys()
+			for thisKey in allKeys:
+				if thisKey == "q": exit("Experiment Aborted")
+				if thisKey == "t":
+					true_usr.draw()
+					prev_rsp = true_usr
+					curr_rsp = True
+					break
+				if thisKey == "f":
+					fals_usr.draw()
+					prev_rsp = fals_usr
+					curr_rsp = False
+					break
+				if thisKey == 'space' or thisKey == 'return':
+					if prev_rsp is not None:
+						if prev_rsp == true_usr: return True
+						else: return False
+		prompt_msg.draw()
+		win.flip(clearBuffer = False)
+
 
 if __name__ == "__main__":
 	main()
