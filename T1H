@@ -8,14 +8,13 @@ import os
 
 import stimuli
 
-OBJ_SIZE = [8,6]
+OBJ_SIZE = [6,6]
 LOG_FLAG = False
 
 def main():
 	# Sigma Settings
-	METAL = ["Turpeth", "Solaris", "Infernalis"]
-	SALT = ["Alembroth", "Volatile", "Petrae"]
-	ACID = "Hartshorn"
+	SHAPE = ["Circle", "Square", "Triangle"]
+	FILL = ["Blue", "Green", "Red"]
 	R = 2
 	GENERATION_MODE = "Combination"
 
@@ -31,13 +30,13 @@ def main():
 	INCORRECT = 56
 
 	# Output Settings
-	DIRECTORY = "./rsps/2O2F3D_C/"
+	DIRECTORY = "./rsps/2O2F3D_H/"
 	HEADER = ["Blc", "Seq", "Rsp", "Truth", "Rsp_t1", "Rsp_t2", "Cnfdnc"]
 
 	###########################################################################
 
 	# Init Sigma
-	SIG = stimuli.Sigma([METAL, SALT], ["metal", "salt"], R, generation_mode = GENERATION_MODE)
+	SIG = stimuli.Sigma([SHAPE, FILL], ["shape", "fill"], R, generation_mode = GENERATION_MODE)
 
 	# Get input settings
 	sub_code = input("Enter Subject code: ")
@@ -74,20 +73,18 @@ def main():
 	# WIN = visual.Window([1728, 1117], monitor="testMonitor", units="deg", fullscr = True, useRetina = True)
 	# WIN = visual.Window([1728, 1117], monitor="testMonitor", units="deg", fullscr = False, useRetina = True, screen = 1)
 	WIN = visual.Window([2560, 1440], monitor="testMonitor", units="deg", fullscr = False, useRetina = True, screen = 1)
-	STIMSIZE = None
 	OBJ_DICT = {
-		0: [visual.ImageStim(WIN, "rsc/2O2F3D_C/Hartshorn.png", size = STIMSIZE), visual.ImageStim(WIN, "rsc/2O2F3D_C/Hartshorn.png", size = STIMSIZE)],
-		2: visual.ImageStim(WIN, "rsc/2O2F3D_C/TA.png"),
-		3: visual.ImageStim(WIN, "rsc/2O2F3D_C/TV.png"),
-		5: visual.ImageStim(WIN, "rsc/2O2F3D_C/TP.png"),
-		7: visual.ImageStim(WIN, "rsc/2O2F3D_C/SA.png"),
-		11: visual.ImageStim(WIN, "rsc/2O2F3D_C/SV.png"),
-		13: visual.ImageStim(WIN, "rsc/2O2F3D_C/SP.png"),
-		17: visual.ImageStim(WIN, "rsc/2O2F3D_C/IA.png"),
-		19: visual.ImageStim(WIN, "rsc/2O2F3D_C/IV.png"),
-		23: visual.ImageStim(WIN, "rsc/2O2F3D_C/IP.png")
+		2: visual.ImageStim(WIN, "rsc/2O2F3D_H/BC.png"),
+		3: visual.ImageStim(WIN, "rsc/2O2F3D_H/GC.png"),
+		5: visual.ImageStim(WIN, "rsc/2O2F3D_H/RC.png"),
+		7: visual.ImageStim(WIN, "rsc/2O2F3D_H/BS.png"),
+		11: visual.ImageStim(WIN, "rsc/2O2F3D_H/GS.png"),
+		13: visual.ImageStim(WIN, "rsc/2O2F3D_H/RS.png"),
+		17: visual.ImageStim(WIN, "rsc/2O2F3D_H/BT.png"),
+		19: visual.ImageStim(WIN, "rsc/2O2F3D_H/GT.png"),
+		23: visual.ImageStim(WIN, "rsc/2O2F3D_H/RT.png")
 	}
-	OBJ_LINSPACE = [-8.3, 0, 8.3]
+	OBJ_LINSPACE = [-4, 4]
 	TRIAL_OBJ_DICT = {
 		"prompt_msg": visual.TextBox2(WIN, 'Your Prediction: ', pos = [-17, -5], alignment = 'right', letterHeight = 1),
 		"true_usr": visual.TextBox2(WIN, 'True', pos = [21, -5], alignment = 'left', color = "Green", letterHeight = 1),
@@ -125,8 +122,8 @@ def main():
 	core.wait(1)
 
 	# training block 1
-	block_disp_start = visual.TextBox2(WIN, "Now that you are familiar with Master Andreae’s notation, you are ready to view the combinations in his notes.", alignment = 'left', letterHeight = 0.8)
-	block_disp_end = visual.TextBox2(WIN, "You have gone through Master Andreae’s notes once and think that you are onto something. You decide to take a short rest before going through the notes again.", alignment = 'left', letterHeight = 0.8)
+	block_disp_start = visual.TextBox2(WIN, "Now that you are familiar with the presentation software, you are prepared to go through the 80 combinations.", alignment = 'left', letterHeight = 0.8)
+	block_disp_end = visual.TextBox2(WIN, "You have gone through all 80 combinations once and think that you are onto something. You can take a short rest before the Corporate urge you to go through them again.", alignment = 'left', letterHeight = 0.8)
 	cont_disp0 = visual.TextBox2(WIN, "(This is the start of block 1. Press any key to start.)",pos = (0, -3), alignment = 'center', letterHeight = 0.8)	
 	cont_disp1 = visual.TextBox2(WIN, "(This is the end of block 1. Press any key to continue.)",pos = (0, -3), alignment = 'center', letterHeight = 0.8)	
 	random.shuffle(block_seq)
@@ -142,8 +139,8 @@ def main():
 	core.wait(0.8)
 
 	# training block 2		
-	block_disp_start = visual.TextBox2(WIN, "You are now ready to go through the notes again.", alignment = 'center', letterHeight = 0.8)
-	block_disp_end = visual.TextBox2(WIN, "You have gone through Master Andreae’s notes twice and believe that you have more or less gotten down to the truth behind Chrysopoeia. However, just when you are about to leave the library …", alignment = 'left', pos = (0, 2), letterHeight = 0.8)
+	block_disp_start = visual.TextBox2(WIN, "You are now ready to go through the combinations again.", alignment = 'center', letterHeight = 0.8)
+	block_disp_end = visual.TextBox2(WIN, "You have gone through the combinations twice and believe that you have more or less gotten down to the combinations that will trigger explosions. However, just when you are about to submit your report …", alignment = 'left', pos = (0, 2), letterHeight = 0.8)
 	cont_disp0 = visual.TextBox2(WIN, "(This is the start of block 2. Press any key to start.)",pos = (0, -3), alignment = 'center', letterHeight = 0.8)	
 	cont_disp1 = visual.TextBox2(WIN, "(This is the end of block 2. Press any key to continue.)",pos = (0, -3), alignment = 'center', letterHeight = 0.8)	
 	random.shuffle(block_seq)
@@ -159,15 +156,15 @@ def main():
 	core.wait(0.8)
 
 	# generalization block
-	OBJ_LINSPACE = [-16.6 ,-8.3, 0, 8.3, 16.6]
+	OBJ_LINSPACE = [-8, 0, 8]
 	# OBJ_LINSPACE = np.arange(-30, 31, 4)
-	SIG_gen = stimuli.Sigma([METAL, SALT], ["metal", "salt"], R + 1, generation_mode = GENERATION_MODE)
+	SIG_gen = stimuli.Sigma([SHAPE, FILL], ["shape", "fill"], R + 1, generation_mode = GENERATION_MODE)
 	sol, non_sol = SIG_gen.satisfies(prod_conj, return_non_solutions = True)
 	correct_seq, incorrect_seq = seq_handler(SIG_gen, SIG_gen.sequences, prod_conj, 6, 6)
 	block_seq = correct_seq + incorrect_seq
 	
-	block_disp_start = visual.TextBox2(WIN, "You are confronted by Master Andreae himself,  breathing and walking normally! As it turns out, the old geezer decided to play a prank on you by faking his own death (although he insists that his aim was only to test your ability as an alchemist). While you are still recovering from the shock, Master Andreae says he intends to show you 12 novel combinations of materials to see if you have indeed learned the secret of Chrysopoeia. Although these combinations have more ingredients, Master explained that the fundamental rule for Chrysopoeia remained unchanged. He presents each of the new combinations one by one and asks whether it will produce gold. ", alignment = 'left', pos = (0, 5), size = [40, None],  letterHeight = 0.8)
-	block_disp_end = visual.TextBox2(WIN, "You have finished the 12 formulas Master Andreae gave you. You wondered how you perform, but only Andreae knows the answer. You gather your thoughts and leave the library.", alignment = 'left', pos = (0, 2), letterHeight = 0.8)
+	block_disp_start = visual.TextBox2(WIN, "You are confronted by your boss, the Corporate manager of the F-302 lab. As it turns out, the Corporate had known about the correct combination all along. The experiment is but an internal qualification test to select the fitting member into the rumored “inner circle”.  You never thought that this extraordinary opportunity will be bestowed upon you. As a final test, your boss throws you 12 novel combinations to see if you correctly deduced the minimal combination that will trigger an explosion. Although these combinations have more objects, he explained that the fundamental rule for triggering an explosion remained unchanged. He restarts the presentation software, and you will see each of the novel combinations and predict whether they will trigger an explosion.", alignment = 'left', pos = (0, 5), size = [40, None],  letterHeight = 0.8)
+	block_disp_end = visual.TextBox2(WIN, "You have finished the 12 combinations your boss gave you. You wondered how you perform, but only the Corporate knows the answer. You gather your thoughts and leave the lab.", alignment = 'left', pos = (0, 2), letterHeight = 0.8)
 	cont_disp0 = visual.TextBox2(WIN, "(This is the start of the Generalization Block. Press any key to start.)",pos = (0, -3), size = [40, None], alignment = 'center', letterHeight = 0.8)
 	cont_disp1 = visual.TextBox2(WIN, "(This is the end of the experiment. Thank you for your participation!)",pos = (0, -3), size = [40, None], alignment = 'center', letterHeight = 0.8)	
 	random.shuffle(block_seq)
@@ -246,38 +243,31 @@ def starter_win(win, disp_objs = []):
 
 	# Background Messages
 	starter_msg0 = visual.TextBox2(win, "Background Story:", pos = (0,7), size = [41, None], alignment = 'left', letterHeight = 1.6)
-	starter_msg1 = visual.TextBox2(win,"     You are the student of the renowned alchemist Johannes Valentinus Andreae, the master in the field of Chrysopoeia (transmuting gold from base metals). Master Andreae was one step away from realizing profitable Chrysopoeia when he died of a chronic illness. The burden of completing his Magnum Opus falls on your shoulders. In this experiment, you will consult the notes of Master Andreae to discover what materials are needed to produce gold. \n\n      Master Andreae managed to narrow down the needed materials to some combination of one acid (Acidum Hartshorn), three metals (Lapis Turpeth, Lapis Solaris, Lapis Infernalis), and three salts (Sol Alembroth, Sol Volatile, Sol Petrae). Specifically, he tested combinations of materials consisting of two metal-salt compounds plus the acid to see which combination produced gold.  Your duty, therefore, is to go through his notes and discover the configuration of materials that will always achieve Chrysopoeia.", pos = (0,-2), size = [40, None], alignment = 'left', letterHeight = 0.7)
+	starter_msg1 = visual.TextBox2(win,"     You are a newly employed physicist in the Deep Rock Corporate, and are assigned to the F-302 lab to investigate a group of exotic objects. The objects resemble simple geometric shapes and are otherwise unimpressive. However, an earlier report indicates that these objects contain a tremendous amount of energy, but will only release the energy (through an explosion) when they are arranged in a certain combination with other objects. Previous research in the lab had built up an experimental setup that uses disposable robots to arrange the objects, so one can comfortably observe the explosions in your control room. \n\n      There are currently 9 such objects known to the team, and they differ by their colors (red, green, blue) and shapes (circle, square, triangle). The Corporate has limited the investigation to a 2-object combination for now. Your job is to go through all of these combinations and deduce the correct (and minimal) combination that will always release energy through an explosion.", pos = (0,-2), size = [40, None], alignment = 'left', letterHeight = 0.7)
 	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [starter_msg0, starter_msg1] + disp_objs)
 	core.wait(0.2)
 	
 	# More Background notes
-	msg1 = visual.TextBox2(win,"Before starting the task, you should first familiarize yourself with Master Andreae’s notation. Above are the three types of metals you will see. They are all color-coded in orange", pos = (0,-7), size = [40, None], alignment = 'left', letterHeight = 0.8)
-	obj0 = visual.ImageStim(win, "rsc/2O2F3D_C/T.png", pos = (-8,1))
-	obj1 = visual.ImageStim(win, "rsc/2O2F3D_C/S.png", pos = (0,1))
-	obj2 = visual.ImageStim(win, "rsc/2O2F3D_C/I.png", pos = (8,1))
-	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1, obj0, obj1, obj2] + disp_objs)
+	msg1 = visual.TextBox2(win,"Before going into the task, You want to familiarize yourself with the presentation software. Above are all 9 objects. They vary in color and shape.", pos = (0,-8), size = [40, None], alignment = 'left', letterHeight = 0.8)
+	obj0 = visual.ImageStim(win, "rsc/2O2F3D_H/BC.png", pos = (-8,15))
+	obj1 = visual.ImageStim(win, "rsc/2O2F3D_H/BS.png", pos = (0,15))
+	obj2 = visual.ImageStim(win, "rsc/2O2F3D_H/BT.png", pos = (8,15))
+	obj3 = visual.ImageStim(win, "rsc/2O2F3D_H/GC.png", pos = (-8,7))
+	obj4 = visual.ImageStim(win, "rsc/2O2F3D_H/GS.png", pos = (0,7))
+	obj5 = visual.ImageStim(win, "rsc/2O2F3D_H/GT.png", pos = (8,7))
+	obj6 = visual.ImageStim(win, "rsc/2O2F3D_H/RC.png", pos = (-8,-1))
+	obj7 = visual.ImageStim(win, "rsc/2O2F3D_H/RS.png", pos = (0,-1))
+	obj8 = visual.ImageStim(win, "rsc/2O2F3D_H/RT.png", pos = (8,-1))
+	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1, obj0, obj1, obj2, obj3, obj4, obj5, obj6, obj7, obj8] + disp_objs)
 	core.wait(0.2)
 
-	msg1 = visual.TextBox2(win,"Above are the three types of salts you will see. They are all color-coded in blue.", pos = (0,-7), size = [40, None], alignment = 'left', letterHeight = 0.8)
-	obj0 = visual.ImageStim(win, "rsc/2O2F3D_C/A.png", pos = (-8,1))
-	obj1 = visual.ImageStim(win, "rsc/2O2F3D_C/V.png", pos = (0,1))
-	obj2 = visual.ImageStim(win, "rsc/2O2F3D_C/P.png", pos = (8,1))
-	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1, obj0, obj1, obj2] + disp_objs)
+	msg1 = visual.TextBox2(win,"A 2-object combination is simply two objects placed near each other. Above is a combination represented on the screen. The order of the combination does not matter.", pos = (0,-7), size = [40, None], alignment = 'left', letterHeight = 0.8)
+	obj1 = visual.ImageStim(win, "rsc/2O2F3D_H/BC.png", pos = (-4,1), size = OBJ_SIZE)
+	obj2 = visual.ImageStim(win, "rsc/2O2F3D_H/RT.png", pos = (4,1), size = OBJ_SIZE)
+	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1, obj1, obj2] + disp_objs)
 	core.wait(0.2)
 
-	msg1 = visual.TextBox2(win,"Master Andrae created metal-salt compounds by mixing a metal with a salt. A compound (shown above) is represented as two elements inside a rectangular box.", pos = (0,-7), size = [40, None], alignment = 'left', letterHeight = 0.8)
-	obj0 = visual.ImageStim(win, "rsc/2O2F3D_C/TA.png", pos = (0,1))
-	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1, obj0] + disp_objs)
-	core.wait(0.2)
-
-	msg1 = visual.TextBox2(win,"As mentioned, the Master tested combinations of two compounds plus the acid (Hartshorn), which binds them together. Above is an example of one combination that appeared in his notes.", pos = (0,-7), size = [40, None], alignment = 'left', letterHeight = 0.8)
-	obj0 = visual.ImageStim(win, "rsc/2O2F3D_C/TA.png", pos = (-8.3,1), size = OBJ_SIZE)
-	obj1 = visual.ImageStim(win, "rsc/2O2F3D_C/Hartshorn.png", pos = (0,1), size = OBJ_SIZE)
-	obj2 = visual.ImageStim(win, "rsc/2O2F3D_C/IP.png", pos = (8.3,1), size = OBJ_SIZE)
-	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1, obj0, obj1, obj2] + disp_objs)
-	core.wait(0.2)
-
-	msg1 = visual.TextBox2(win,"In this experiment, you will see the 80 combinations that the Master tested, presented one by one. As each combination is presented, you will be asked to predict whether it will produce gold. You will also be asked to state how confident you are in your prediction. You will then be told whether in fact that combination yielded gold, that is, whether your prediction was correct or not. At first you will just have to guess, but on the basis of the feedback you receive, you should gradually be able to learn which combinations produce gold. \n\nYou will go through the two blocks of predictions. Each of the 80 combinations is presented once in each block.", pos = (0,1), size = [40, None], alignment = 'left', letterHeight = 0.8)
+	msg1 = visual.TextBox2(win,"In this experiment, you will see 80 combinations of objects arranged by the robots, presented one by one. As each combination is presented, you will be asked by the corporate to predict whether it will explode. You will also be asked to state how confident you are in your prediction. You will then see whether in fact that combination triggers an explosion, that is, whether your prediction was correct or not. At first you will just have to guess, but on the basis of the feedback you receive, you should gradually be able to learn which combinations trigger an explosion.  \n\nYou will go through two blocks of predictions. Each of the 80 combinations is presented once in each block.", pos = (0,1), size = [40, None], alignment = 'left', letterHeight = 0.8)
 	spec_cont(win, ABORT_KEY, PROCEED_KEYS, [msg1] + disp_objs)
 	core.wait(0.2)
 
@@ -373,11 +363,9 @@ def trial(win, obj_dict, trial_obj_dict, Sequence, formula, obj_linspace, disp_o
 	seq_rep = seq_rep[:-2]
 
 	win_objs = []
-	filler_gen = obj_dict[0].__iter__()
-	for obj_ind, obj in enumerate(Sequence.objects):
-		win_objs += [obj_dict[obj.id]]
-		if obj_ind < len(Sequence.objects) - 1:
-			win_objs += [next(filler_gen)]
+	for ind, obj in enumerate(Sequence.objects):
+		curr_obj = obj_dict[obj.id]
+		win_objs.append(curr_obj)
 	for obj_ind in range(len(win_objs)):
 		win_objs[obj_ind].pos = [obj_linspace[obj_ind], 2]
 		win_objs[obj_ind].size = OBJ_SIZE
